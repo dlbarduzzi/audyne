@@ -40,3 +40,4 @@ next-env.d.ts
 # custom
 .env
 .local/
+docker-data/
