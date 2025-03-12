@@ -9,8 +9,8 @@ on:
       - "*"
 
 jobs:
-  test:
-    name: test
+  ci:
+    name: ci
     runs-on: ubuntu-latest
     env:
       DB_NAME: "test_db"
