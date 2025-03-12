@@ -1,6 +1,5 @@
 import type { Config } from "tailwindcss"
 
-// eslint-disable-next-line n/no-missing-import
 import tailwindcssForms from "@tailwindcss/forms"
 import tailwindcssAnimate from "tailwindcss-animate"
 

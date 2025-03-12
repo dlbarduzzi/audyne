@@ -1,13 +1,15 @@
-<p align="center">
-  <h2 align="center">
-    Audyne
-  </h2>
+# audyne
+
+<p>
+    <a href="https://github.com/dlbarduzzi/audyne/actions/workflows/ci.yaml" target="_blank" rel="noopener">
+        <img src="https://github.com/dlbarduzzi/audyne/actions/workflows/ci.yaml/badge.svg" alt="ci" />
+    </a>
 </p>
 
 ## About
 
-TBD
+A custom auth application with support for credentials and social providers.
 
 ## License
 
-TBD
+[MIT](./LICENSE)

@@ -1,50 +1,5 @@
-import { db } from "@/db/core"
+import { GitHub } from "./providers/github"
+import { Google } from "./providers/google"
 
-type SocialProviders = {
-  github: GitHub
-  google: Google
-}
-
-type AuthContext = {
-  database: typeof db
-  socialProviders: SocialProviders
-}
-
-export function auth() {
-  const ctx = initContext()
-  return { ctx }
-}
-
-function initContext() {
-  const ctx: AuthContext = {
-    database: db,
-    socialProviders: initProviders(),
-  }
-  return ctx
-}
-
-function initProviders() {
-  const github = new GitHub("123")
-  const google = new Google("123")
-  return { github, google }
-}
-
-class GitHub {
-  private readonly clientId: string
-  constructor(clientId: string) {
-    this.clientId = clientId
-  }
-  public createAuthorizationURL() {
-    return "/api/github-provider"
-  }
-}
-
-class Google {
-  private readonly clientId: string
-  constructor(clientId: string) {
-    this.clientId = clientId
-  }
-  public createAuthorizationURL() {
-    return "/api/google-provider"
-  }
-}
+export const github = new GitHub("123")
+export const google = new Google("123")

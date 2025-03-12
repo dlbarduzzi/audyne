@@ -1,12 +1,7 @@
-import { auth } from "@/lib/auth"
+import NextLink from "next/link"
 import { Button } from "@/components/ui/button"
 
-export default async function Page() {
-  // Example calling social providers.
-  console.log(auth.ctx.socialProviders.github.createAuthorizationURL())
-  // Example making database queries.
-  const users = await auth.ctx.database.query.users.findMany()
-  console.log({ users })
+export default function Page() {
   return (
     <div>
       <section aria-labelledby="homepage-header">
@@ -14,8 +9,17 @@ export default async function Page() {
           Homepage.
         </h1>
       </section>
-      <div className="p-4">
-        <Button type="button">Button</Button>
+      <div className="space-x-3 p-4">
+        <Button type="button" variant="neutral" asChild>
+          <NextLink href="/sign-in" prefetch={false}>
+            Sign in
+          </NextLink>
+        </Button>
+        <Button type="button" asChild>
+          <NextLink href="/sign-up" prefetch={false}>
+            Sign up
+          </NextLink>
+        </Button>
       </div>
     </div>
   )
