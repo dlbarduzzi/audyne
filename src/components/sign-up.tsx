@@ -5,6 +5,7 @@ import NextImage from "next/image"
 
 import { z } from "zod"
 import { useForm } from "react-hook-form"
+import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { Input } from "@/components/ui/input"
@@ -20,8 +21,11 @@ import {
   FormProvider,
 } from "@/components/ui/form"
 
-import { cn, delay } from "@/lib/utils"
+import { GoogleButton } from "./google-button"
+import { GitHubButton } from "./github-button"
 import { ButtonSpinner } from "./button-spinner"
+
+import { cn, delay } from "@/lib/utils"
 
 const signUpSchema = z.object({
   email: z.string().min(1, "Email is required").email("Not a valid email"),
@@ -33,6 +37,8 @@ const signUpSchema = z.object({
 type SignUpSchema = z.infer<typeof signUpSchema>
 
 export function SignUp() {
+  const [isTermsChecked, setIsTermsChecked] = useState(true)
+
   const form = useForm<SignUpSchema>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -44,9 +50,7 @@ export function SignUp() {
   const { errors, isSubmitting } = form.formState
 
   async function onSubmit(data: SignUpSchema) {
-    // TODO:
-    // 1. Check if terms and conditions are checked
-    // 2. Add link to terms and conditions
+    // TODO: Check if terms and conditions are checked
     await delay(2000)
     console.log(data)
   }
@@ -79,7 +83,7 @@ export function SignUp() {
               <h2 className={cn("text-lg font-bold tracking-tight text-gray-900")}>
                 Welcome to Audyne
               </h2>
-              <p className="text-sm text-gray-700">
+              <p className="text-sm font-medium text-gray-500">
                 Create an account to start exploring
               </p>
             </div>
@@ -136,13 +140,40 @@ export function SignUp() {
                   <Checkbox
                     id="sign-up-terms-and-conditions"
                     disabled={isSubmitting}
-                    defaultChecked
+                    checked={isTermsChecked}
+                    onCheckedChange={() => setIsTermsChecked(() => !isTermsChecked)}
                   />
                   <Label
                     htmlFor="sign-up-terms-and-conditions"
-                    className="text-[13px] font-medium peer-disabled:cursor-not-allowed"
+                    className={cn(
+                      "text-[13px] font-medium peer-disabled:cursor-not-allowed",
+                      isSubmitting && "text-gray-400"
+                    )}
                   >
-                    Accept terms and conditions
+                    Accept{" "}
+                    <NextLink
+                      href="/info/terms"
+                      className={cn(
+                        "font-semibold hover:underline hover:underline-offset-4",
+                        isSubmitting
+                          ? "pointer-events-none text-gray-400"
+                          : "text-gray-900"
+                      )}
+                    >
+                      terms
+                    </NextLink>
+                    {" and "}
+                    <NextLink
+                      href="/info/conditions"
+                      className={cn(
+                        "font-semibold hover:underline hover:underline-offset-4",
+                        isSubmitting
+                          ? "pointer-events-none text-gray-400"
+                          : "text-gray-900"
+                      )}
+                    >
+                      conditions
+                    </NextLink>
                   </Label>
                 </div>
                 <div>
@@ -151,13 +182,32 @@ export function SignUp() {
                     size="md"
                     title="Create Account"
                     className="w-full"
+                    disabled={isSubmitting || !isTermsChecked}
                     isSubmitting={isSubmitting}
                   />
                 </div>
               </form>
             </FormProvider>
           </div>
-          <div className="space-x-1 text-center text-sm text-gray-700">
+          <div className="relative">
+            <div aria-hidden="true" className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-t-gray-200" />
+            </div>
+            <div className="relative flex justify-center text-sm/8 font-medium">
+              <span className="bg-white px-6 text-gray-500">Or continue with</span>
+            </div>
+          </div>
+          <div className="flex flex-col gap-y-3.5">
+            <GoogleButton
+              action="sign-up"
+              isDisabled={isSubmitting || !isTermsChecked}
+            />
+            <GitHubButton
+              action="sign-up"
+              isDisabled={isSubmitting || !isTermsChecked}
+            />
+          </div>
+          <div className="space-x-1 text-center text-sm font-medium text-gray-500">
             <span>Already have an account?</span>
             <NextLink
               href="/sign-in"

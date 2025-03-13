@@ -7,7 +7,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     <div
       className={cn(
         "flex min-h-screen flex-col items-center justify-center",
-        "bg-gradient-to-t from-violet-400 to-violet-50"
+        "bg-gradient-to-t from-violet-400 via-indigo-200 to-violet-50"
       )}
     >
       <main className="grid w-full max-w-[432px] flex-1">{children}</main>

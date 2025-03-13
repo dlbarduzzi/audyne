@@ -19,6 +19,8 @@ const buttonVariants = cva(
           disabled:text-violet-100`,
         neutral: `bg-gray-200 text-gray-600 hover:bg-gray-300
           focus-visible:ring-gray-300 disabled:text-gray-400`,
+        clear: `border border-gray-300 bg-white text-gray-700 hover:bg-gray-100
+          focus-visible:ring-gray-300 disabled:text-gray-400`,
         danger: `bg-red-500 text-white hover:bg-red-600
           focus-visible:ring-red-500 disabled:bg-red-400 disabled:text-red-100`,
       },
