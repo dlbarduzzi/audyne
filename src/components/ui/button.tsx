@@ -34,7 +34,7 @@ const buttonVariants = cva(
   }
 )
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof buttonVariants> & { asChild?: boolean }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(

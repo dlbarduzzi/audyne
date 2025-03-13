@@ -1,32 +1,37 @@
 "use client"
 
 import * as React from "react"
+import * as RadixCheckbox from "@radix-ui/react-checkbox"
 
 import { cn } from "@/lib/utils"
 
 const Checkbox = React.forwardRef<
-  HTMLInputElement,
-  React.InputHTMLAttributes<HTMLInputElement>
+  React.ComponentRef<typeof RadixCheckbox.Root>,
+  React.ComponentPropsWithoutRef<typeof RadixCheckbox.Root>
 >(({ className, ...props }, ref) => (
-  <input
-    type="checkbox"
+  <RadixCheckbox.Root
+    ref={ref}
     className={cn(
-      "peer size-5 shrink-0 cursor-pointer rounded",
-      "disabled:cursor-not-allowed",
-      "checked:bg-red-500 checked:hover:bg-red-500",
-      "checked:focus-visible:bg-green-500",
-      "focus-visible:outline-none focus-visible:ring-2",
-      "focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-      props.checked
-        ? "border-blue-500 bg-red-500 text-red-500 focus:ring-blue-500"
-        : "border-gray-300 bg-gray-100 focus:ring-gray-300",
+      "peer size-5 shrink-0 rounded border border-gray-300 focus-visible:outline-none",
+      "focus-visible:border-blue-400 focus-visible:ring-2",
+      "focus-visible:ring-blue-200 focus-visible:ring-offset-2",
+      "disabled:cursor-not-allowed disabled:opacity-50",
+      "data-[state=checked]:border-violet-500",
+      "data-[state=checked]:bg-violet-500",
+      "data-[state=checked]:focus-visible:border-violet-500",
+      "data-[state=checked]:focus-visible:ring-violet-500",
       className
     )}
-    ref={ref}
     {...props}
-  />
+  >
+    <RadixCheckbox.Indicator
+      className={cn("flex size-full items-center justify-center")}
+    >
+      <div className="size-full bg-[url(/images/checkbox-indicator.svg)]" />
+    </RadixCheckbox.Indicator>
+  </RadixCheckbox.Root>
 ))
 
-Checkbox.displayName = "Checkbox"
+Checkbox.displayName = RadixCheckbox.Root.displayName
 
 export { Checkbox }
