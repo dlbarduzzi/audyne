@@ -14,9 +14,9 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: `bg-sky-500 text-white hover:bg-sky-600
-          focus-visible:ring-sky-500 disabled:bg-sky-400
-          disabled:text-sky-100`,
+        default: `bg-violet-500 text-white hover:bg-violet-600
+          focus-visible:ring-violet-500 disabled:bg-violet-400
+          disabled:text-violet-100`,
         neutral: `bg-gray-200 text-gray-600 hover:bg-gray-300
           focus-visible:ring-gray-300 disabled:text-gray-400`,
         danger: `bg-red-500 text-white hover:bg-red-600
