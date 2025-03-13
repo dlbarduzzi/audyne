@@ -1,12 +1,14 @@
 "use client"
 
+import type { SignUpSchema } from "@/tools/auth/schemas/sign-up"
+
 import NextLink from "next/link"
 import NextImage from "next/image"
 
-import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Eye, EyeOff } from "lucide-react"
 
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -26,17 +28,10 @@ import { GitHubButton } from "./github-button"
 import { ButtonSpinner } from "./button-spinner"
 
 import { cn, delay } from "@/lib/utils"
-
-const signUpSchema = z.object({
-  email: z.string().min(1, "Email is required").email("Not a valid email"),
-  password: z.string().min(1, "Password is required").min(8, {
-    message: "Password must be at least 8 characters long",
-  }),
-})
-
-type SignUpSchema = z.infer<typeof signUpSchema>
+import { signUpSchema } from "@/tools/auth/schemas/sign-up"
 
 export function SignUp() {
+  const [showPassword, setShowPassword] = useState(false)
   const [isTermsChecked, setIsTermsChecked] = useState(true)
 
   const form = useForm<SignUpSchema>({
@@ -50,7 +45,12 @@ export function SignUp() {
   const { errors, isSubmitting } = form.formState
 
   async function onSubmit(data: SignUpSchema) {
-    // TODO: Check if terms and conditions are checked
+    if (!isTermsChecked) {
+      // TODO: Display a toast error.
+      console.log("[Error] You must accept terms and conditions")
+      return
+    }
+    setShowPassword(() => false)
     await delay(2000)
     console.log(data)
   }
@@ -121,16 +121,38 @@ export function SignUp() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Password</FormLabel>
-                      <div className="mt-0.5">
+                      <div className="relative mt-0.5">
                         <FormControl>
                           <Input
                             {...field}
-                            type="text"
+                            type={showPassword ? "text" : "password"}
                             variant={!!errors.password ? "danger" : "default"}
                             disabled={isSubmitting}
                             placeholder="Enter your password..."
+                            className="pr-12"
                           />
                         </FormControl>
+                        <div
+                          className={cn(
+                            "absolute inset-y-0 right-0 flex items-center pr-3"
+                          )}
+                        >
+                          <div
+                            role="button"
+                            onClick={() => setShowPassword(() => !showPassword)}
+                            className={cn(
+                              isSubmitting
+                                ? "pointer-events-none text-gray-300"
+                                : "text-gray-400"
+                            )}
+                          >
+                            {showPassword ? (
+                              <Eye className="size-6" />
+                            ) : (
+                              <EyeOff className="size-6" />
+                            )}
+                          </div>
+                        </div>
                       </div>
                       <FormMessage />
                     </FormItem>
